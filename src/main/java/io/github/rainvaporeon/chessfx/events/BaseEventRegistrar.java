@@ -16,7 +16,7 @@ public class BaseEventRegistrar {
     public void initialize(Stage stage) {
         if(initialized.get()) throw new IllegalStateException("Already initialized");
         initialized.set(true);
-        stage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        stage.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             ClickContext ctx = new ClickContext(event.getButton(), event.getX(), event.getY(), event.getZ());
             ClickEvent ev = new ClickEvent(ctx, ClickEvent.Type.CLICK);
             EventBus.INSTANCE.fire(ev);

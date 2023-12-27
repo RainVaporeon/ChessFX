@@ -30,6 +30,7 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    // name clash with Application#init()V;
     private static void init0() {
         BaseEventRegistrar.INSTANCE.initialize(stage);
         EventHandler.init();
