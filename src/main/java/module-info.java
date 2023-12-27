@@ -1,4 +1,4 @@
-module io.github.rainvaporeon.chessfx {
+module ChessFX {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -10,7 +10,10 @@ module io.github.rainvaporeon.chessfx {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires FishUtilities;
 
     opens io.github.rainvaporeon.chessfx to javafx.fxml;
+    opens io.github.rainvaporeon.chessfx.events to FishUtilities;
+    opens io.github.rainvaporeon.chessfx.handlers to FishUtilities;
     exports io.github.rainvaporeon.chessfx;
 }

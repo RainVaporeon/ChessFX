@@ -1,4 +1,6 @@
 package io.github.rainvaporeon.chessfx.game;
 
-public record ClickContext(int button, int x, int y) {
+import javafx.scene.input.MouseButton;
+
+public record ClickContext(MouseButton button, double x, double y, double z) {
 }

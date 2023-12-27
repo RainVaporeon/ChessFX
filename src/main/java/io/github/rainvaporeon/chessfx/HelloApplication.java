@@ -1,5 +1,7 @@
 package io.github.rainvaporeon.chessfx;
 
+import io.github.rainvaporeon.chessfx.events.BaseEventRegistrar;
+import io.github.rainvaporeon.chessfx.handlers.EventHandler;
 import io.github.rainvaporeon.chessfx.utils.GridPanes;
 import javafx.application.Application;
 import javafx.event.EventType;
@@ -14,14 +16,23 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    private static Stage stage;
+
     @Override
     public void start(Stage stage) throws IOException {
+        HelloApplication.stage = stage;
+        init0();
+
         Scene scene = new Scene(GridPanes.CHESS_LAYOUT);
-        stage.addEventHandler(EventType.ROOT, null);
         stage.setTitle("ChessFX");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    private static void init0() {
+        BaseEventRegistrar.INSTANCE.initialize(stage);
+        EventHandler.init();
     }
 
     public static void main(String[] args) {
