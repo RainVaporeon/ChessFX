@@ -1,16 +1,21 @@
 package io.github.rainvaporeon.chessfx.utils;
 
 import com.spiritlight.chess.fish.game.Piece;
+import com.spiritlight.fishutils.logging.Loggers;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
+import io.github.rainvaporeon.chessfx.game.helper.GridHelper;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class GridPanes {
-    public static final GridPane CHESS_LAYOUT;
+import java.util.Arrays;
 
-    static {
+import static com.spiritlight.chess.fish.game.Piece.NONE;
+
+public class GridPanes {
+
+    public static GridPane getChessBoard() {
         GridPane pane = new GridPane();
 
         // Create 64 rectangles and add to pane
@@ -20,19 +25,74 @@ public class GridPanes {
             count++;
             for (int j = 0; j < 8; j++) {
                 Rectangle r = new Rectangle(s, s, s, s);
-                // per Fish specification, the top rows are back-most.
-                int piece = FishHook.INSTANCE.getPieceAt(j, 7 - i);
-                ImageView view = Images.getImageView(FishHook.INSTANCE.getCompatiblePieceName(piece));
                 if (count % 2 == 0) {
                     r.setFill(Color.DARKOLIVEGREEN);
                 } else {
                     r.setFill(Color.ANTIQUEWHITE);
                 }
-                pane.add(view == null ? r : view, j, i);
+                pane.add(r, j, i);
                 count++;
             }
         }
+        return pane;
+    }
 
-        CHESS_LAYOUT = pane;
+    // Priority: Highest
+    public static GridPane getPieceOverlay() {
+        GridPane pane = new GridPane();
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                // per Fish implementation: Invert Y
+                int piece = FishHook.INSTANCE.getPieceAt(i, 7 - j);
+                ImageView view = Images.getImageView(FishHook.INSTANCE.getCompatiblePieceName(piece));
+                pane.add(view, i, j);
+            }
+        }
+
+        return pane;
+    }
+
+    // Priority: 2nd highest
+    public static GridPane getSelectionOverlayPane() {
+        if(SharedElements.selectedX == -1) return null;
+        int piece = FishHook.INSTANCE.getPieceAt(SharedElements.selectedX, SharedElements.selectedY);
+
+        GridPane pane = new GridPane();
+        int[] possibleMoves = FishHook.INSTANCE.getPossibleMoves(SharedElements.selectedX + 8 * SharedElements.selectedY);
+
+        if(!Piece.is(piece, NONE)) {
+            Rectangle rect = new Rectangle(64, 64, 64, 64);
+            rect.setFill(GridHelper.isDarkSquare(SharedElements.selectedX, 7 - SharedElements.selectedY) ? Color.DARKKHAKI : Color.BURLYWOOD);
+            pane.add(rect, SharedElements.selectedX, 7 - SharedElements.selectedY);
+            Loggers.getThreadLogger().debug(STR."Placed colored sign at \{SharedElements.selectedX}, \{SharedElements.selectedY}");
+        } else {
+            return null;
+        }
+        Loggers.getThreadLogger().debug(STR."Found piece \{Piece.asString(piece)}@\{SharedElements.selectedX + 8 * SharedElements.selectedY}");
+        Loggers.getThreadLogger().debug(STR."Can move to \{Arrays.toString(possibleMoves)}");
+
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                int index = i + (7 - j) * 8;
+                for(int value : possibleMoves) {
+                    if(index == value) {
+                        if(Piece.is(FishHook.INSTANCE.getPieceAt(index), NONE)) {
+                            pane.add(Images.getImageView("dot"), i, j);
+                        } else {
+                            pane.add(Images.getImageView("capture"), i, j);
+                        }
+                    }
+                }
+                pane.add(Images.getImageView("blank"), i, j);
+            }
+        }
+        return pane;
+    }
+
+    private static GridPane emptyLayout() {
+        GridPane gp = new GridPane();
+        for(int i = 0; i < 64; i++) gp.add(Images.getImageView("blank"), i / 8, i % 8);
+        return gp;
     }
 }
