@@ -65,12 +65,12 @@ public class GridPanes {
             Rectangle rect = new Rectangle(64, 64, 64, 64);
             rect.setFill(GridHelper.isDarkSquare(SharedElements.selectedX, 7 - SharedElements.selectedY) ? Color.DARKKHAKI : Color.BURLYWOOD);
             pane.add(rect, SharedElements.selectedX, 7 - SharedElements.selectedY);
-            Loggers.getThreadLogger().debug(STR."Placed colored sign at \{SharedElements.selectedX}, \{SharedElements.selectedY}");
+            ChessFXLogger.getLogger().debug(STR."Placed colored sign at \{SharedElements.selectedX}, \{SharedElements.selectedY}");
         } else {
             return null;
         }
-        Loggers.getThreadLogger().debug(STR."Found piece \{Piece.asString(piece)}@\{SharedElements.selectedX + 8 * SharedElements.selectedY}");
-        Loggers.getThreadLogger().debug(STR."Can move to \{Arrays.toString(possibleMoves)}");
+        ChessFXLogger.getLogger().debug(STR."Found piece \{Piece.asString(piece)}@\{SharedElements.selectedX + 8 * SharedElements.selectedY}");
+        ChessFXLogger.getLogger().debug(STR."Can move to \{Arrays.toString(possibleMoves)}");
 
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
