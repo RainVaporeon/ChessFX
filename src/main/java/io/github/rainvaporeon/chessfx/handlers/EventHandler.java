@@ -2,6 +2,7 @@ package io.github.rainvaporeon.chessfx.handlers;
 
 import com.spiritlight.fishutils.logging.Loggers;
 import com.spiritlight.fishutils.utils.eventbus.events.EventBusSubscriber;
+import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.events.ClickEvent;
 import io.github.rainvaporeon.chessfx.events.bus.FXEventBus;
 import io.github.rainvaporeon.chessfx.game.helper.GridHelper;
@@ -19,7 +20,7 @@ public class EventHandler {
     public static void onClickAction(ClickEvent event) {
         Loggers.getThreadLogger().debug(event.toString());
         Loggers.getThreadLogger().debug(STR."Determined click position=\{parseLocation(GridHelper.getX(event.getContext().x()) + 8 * GridHelper.getY(event.getContext().y()))}");
-
+        Loggers.getThreadLogger().debug(STR."Click position refers to \{FishHook.INSTANCE.getPieceAt(GridHelper.getX(event.getContext().x()), GridHelper.getY(event.getContext().y()))}");
     }
 
     public static String parseLocation(int src) {
