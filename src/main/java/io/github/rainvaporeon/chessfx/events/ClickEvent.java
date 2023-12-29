@@ -3,7 +3,8 @@ package io.github.rainvaporeon.chessfx.events;
 import com.spiritlight.fishutils.utils.eventbus.events.Event;
 import io.github.rainvaporeon.chessfx.game.ClickContext;
 
-public class ClickEvent extends Event {
+public class ClickEvent extends FXEvent {
+
     private final ClickContext context;
     private final Type type;
     public ClickEvent(ClickContext context, Type type) {
@@ -21,7 +22,7 @@ public class ClickEvent extends Event {
 
     @Override
     public String toString() {
-        return type + "@" + context.toString();
+        return STR."\{type}@\{context.toString()}";
     }
 
     public enum Type {

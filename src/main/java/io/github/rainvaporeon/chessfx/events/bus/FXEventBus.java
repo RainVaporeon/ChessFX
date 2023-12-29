@@ -14,6 +14,9 @@ import io.github.rainvaporeon.chessfx.events.ClickEvent;
 public class FXEventBus extends EventBus {
     public static final FXEventBus INSTANCE = new FXEventBus();
 
+    /**
+     * The delay before HOLD events is fired, in milliseconds.
+     */
     private static long holdDelay = 100;
     private long timeSinceLastClick = 0;
 

@@ -36,6 +36,10 @@ public class HelloApplication extends Application {
         EventHandler.init();
     }
 
+    public static Stage getStage() {
+        return stage;
+    }
+
     public static void main(String[] args) {
         launch();
     }
