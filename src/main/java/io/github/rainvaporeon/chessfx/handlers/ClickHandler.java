@@ -1,7 +1,6 @@
 package io.github.rainvaporeon.chessfx.handlers;
 
 import com.spiritlight.chess.fish.game.Piece;
-import com.spiritlight.chess.fish.game.utils.game.Move;
 import com.spiritlight.fishutils.utils.eventbus.events.EventBusSubscriber;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.events.SelectionChangedEvent;
@@ -41,8 +40,6 @@ public class ClickHandler {
                 if(!success) resetClicks();
             }
         }
-
-
     }
 
     public static void resetClicks() {

@@ -1,6 +1,7 @@
 package io.github.rainvaporeon.chessfx.handlers;
 
 import com.spiritlight.fishutils.utils.eventbus.events.EventBusSubscriber;
+import io.github.rainvaporeon.chessfx.ChessFX;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.events.ClickEvent;
 import io.github.rainvaporeon.chessfx.events.SelectionChangedEvent;
@@ -17,7 +18,7 @@ public class EventHandler {
 
     public static void init() { /* Loads this class if not already loaded */ }
 
-    @EventBusSubscriber
+    @EventBusSubscriber(priority = EventBusSubscriber.Priority.HIGHEST)
     public static void onClickAction(ClickEvent event) {
         ChessFXLogger.getLogger().debug(event.toString());
         ChessFXLogger.getLogger().debug(STR."Determined click position=\{parseLocation(GridHelper.getX(event.getContext().x()) + 8 * GridHelper.getY(event.getContext().y()))}");
@@ -29,7 +30,12 @@ public class EventHandler {
         FXEventBus.INSTANCE.fire(new SelectionChangedEvent(SharedElements.selectedX, SharedElements.selectedY));
 
         ChessFXLogger.getLogger().debug(STR."Selection: \{SharedElements.selectedX}, \{SharedElements.selectedY}");
-        Board.update();
+        try {
+            Board.update();
+        } catch (Throwable t) {
+            ChessFXLogger.getLogger().fatal("Fatal error: ", t);
+        }
+        ChessFXLogger.getLogger().debug("Called board update");
     }
 
     public static String parseLocation(int src) {
