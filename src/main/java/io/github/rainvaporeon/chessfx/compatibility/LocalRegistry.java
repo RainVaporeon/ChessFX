@@ -1,8 +1,10 @@
 package io.github.rainvaporeon.chessfx.compatibility;
 
 import com.spiritlight.chess.fish.game.Piece;
+import com.spiritlight.chess.fish.game.utils.MoveGenerator;
 import com.spiritlight.chess.fish.game.utils.board.BoardMap;
 import com.spiritlight.chess.fish.game.utils.game.Move;
+import com.spiritlight.fishutils.collections.IntList;
 
 import java.util.Locale;
 
@@ -48,6 +50,11 @@ public class LocalRegistry {
             }
 
             @Override
+            public int getPieceAt(int location) {
+                return currentMap.getPieceAt(location);
+            }
+
+            @Override
             public int getBoardState() {
                 return switch (currentMap.getGameState().getValue()) {
                     case IN_PROGRESS -> FishHook.PROGRESS;
@@ -56,6 +63,29 @@ public class LocalRegistry {
                     case DRAW_50_MOVE -> FishHook.MOVE_50;
                     default -> throw new IllegalArgumentException(STR."unsupported enum: \{currentMap.getGameState().getValue()}");
                 };
+            }
+
+            @Override
+            public String getPieceName(int piece) {
+                return Piece.asString(piece);
+            }
+
+            private static final boolean BIT_MODE = false;
+            @Override
+            public int[] getPossibleMoves(int location) {
+                int color = Piece.color(this.getPieceAt(location));
+                if(BIT_MODE) {
+                    return MoveGenerator.create(color == WHITE ? currentMap : currentMap.getEnemyBoard())
+                            .getValidMovesFor(location)
+                            .stream().mapToInt(Move::to)
+                            .toArray();
+                } else {
+                    IntList list = new IntList(8);
+                    for(int i = 0; i < 64; i++) {
+                        if((color == WHITE ? currentMap : currentMap.getEnemyBoard()).canMove(location, i, true)) list.add(i);
+                    }
+                    return list.toIntArray();
+                }
             }
         };
     }
