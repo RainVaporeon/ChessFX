@@ -2,6 +2,7 @@ package io.github.rainvaporeon.chessfx;
 
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.events.BaseEventRegistrar;
+import io.github.rainvaporeon.chessfx.handlers.ClickHandler;
 import io.github.rainvaporeon.chessfx.handlers.EventHandler;
 import io.github.rainvaporeon.chessfx.utils.Board;
 import io.github.rainvaporeon.chessfx.utils.GridPanes;
@@ -36,6 +37,7 @@ public class ChessFX extends Application {
     private static void init0() {
         BaseEventRegistrar.INSTANCE.initialize(SharedElements.getStage());
         EventHandler.init();
+        ClickHandler.init();
         FishHook.INSTANCE.boardInitialize();
     }
 
