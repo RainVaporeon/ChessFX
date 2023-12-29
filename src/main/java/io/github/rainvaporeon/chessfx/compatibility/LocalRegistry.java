@@ -1,5 +1,6 @@
 package io.github.rainvaporeon.chessfx.compatibility;
 
+import com.spiritlight.chess.fish.game.FEN;
 import com.spiritlight.chess.fish.game.Piece;
 import com.spiritlight.chess.fish.game.utils.MoveGenerator;
 import com.spiritlight.chess.fish.game.utils.board.BoardMap;
@@ -68,6 +69,16 @@ public class LocalRegistry {
                     case DRAW_50_MOVE -> FishHook.MOVE_50;
                     default -> throw new IllegalArgumentException(STR."unsupported enum: \{currentMap.getGameState().getValue()}");
                 };
+            }
+
+            @Override
+            public boolean validateFENString(String fen) {
+                try {
+                    FEN.load(fen);
+                    return true;
+                } catch (Exception ex) {
+                    return false;
+                }
             }
 
             @Override

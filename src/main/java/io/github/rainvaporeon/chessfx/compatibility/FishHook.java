@@ -34,6 +34,8 @@ public interface FishHook {
 
     int getPieceAt(int location);
 
+    boolean validateFENString(String fen);
+
     int PROGRESS  = 0;
     int CHECKMATE = 1;
     int STALEMATE = 2;
