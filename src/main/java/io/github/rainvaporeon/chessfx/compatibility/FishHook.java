@@ -23,8 +23,14 @@ public interface FishHook {
     // Initializes the default board
     void boardInitialize();
 
+    String getPieceName(int piece);
+
+    int[] getPossibleMoves(int location);
+
     // Gets a piece at location with the board
     int getPieceAt(int x, int y);
+
+    int getPieceAt(int location);
 
     int PROGRESS  = 0;
     int CHECKMATE = 1;
