@@ -21,6 +21,15 @@
             <artifactId>FishUtilities</artifactId>
             <version>1.2.14-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.spiritlight.chess.fish</groupId>
+            <artifactId>Fish</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/localLib/Fish-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
         <!-- End of self-dependency -->
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -141,7 +150,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>io.github.rainvaporeon.chessfx/io.github.rainvaporeon.chessfx.HelloApplication
+                            <mainClass>io.github.rainvaporeon.chessfx/io.github.rainvaporeon.chessfx.ChessFX
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

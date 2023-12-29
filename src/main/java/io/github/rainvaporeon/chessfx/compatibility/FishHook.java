@@ -6,21 +6,30 @@ import java.lang.reflect.Field;
  * Interface for interacting with the Fish implementation
  */
 public interface FishHook {
-    FishHook INSTANCE = null;
+    FishHook INSTANCE = LocalRegistry.registerFish();
 
+    // Gets the name compatible for local resources for a given piece
     String getCompatiblePieceName(int piece);
 
+    // Plays this notation in the current board
     boolean boardPlayMove(String notation);
 
-    boolean boardPlayMove(int x, int y);
+    // Plays this location in the current board
+    boolean boardPlayMove(int sourceX, int sourceY, int targetX, int targetY);
 
-    static void registerHook(FishHook hook) {
-        try {
-            Field f = FishHook.class.getDeclaredField("INSTANCE");
-            f.setAccessible(true);
-            f.set(null, hook);
-        } catch (ReflectiveOperationException ex) {
-            throw new RuntimeException("Unable to hook: ", ex);
-        }
-    }
+    // Loads this FEN into the active board
+    void boardLoadFEN(String fen);
+
+    // Initializes the default board
+    void boardInitialize();
+
+    // Gets a piece at location with the board
+    int getPieceAt(int x, int y);
+
+    int PROGRESS  = 0;
+    int CHECKMATE = 1;
+    int STALEMATE = 2;
+    int MOVE_50   = 4;
+    int getBoardState();
+
 }
