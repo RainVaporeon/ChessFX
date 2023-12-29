@@ -8,14 +8,13 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class Images {
-    public static Image getImage(int piece) {
-        InputStream is = Objects.requireNonNull(Image.class.getResourceAsStream(STR."pieces/\{FishHook.INSTANCE.getCompatiblePieceName(piece)}.png"));
-        return new Image(is);
-    }
 
-    public static ImageView getResource(String image) {
-        InputStream stream = Objects.requireNonNull(Images.class.getResourceAsStream(STR."pieces/\{image}.png"));
+    public static ImageView getImageView(String image) {
+        InputStream stream = Images.class.getResourceAsStream(STR."/pieces/64/\{image}.png");
+        if(stream == null) return null;
         Image img = new Image(stream);
-        return new ImageView(img);
+        final ImageView imageView = new ImageView(img);
+        imageView.resize(64, 64);
+        return imageView;
     }
 }
