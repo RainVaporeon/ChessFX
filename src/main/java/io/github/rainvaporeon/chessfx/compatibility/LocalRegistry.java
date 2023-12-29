@@ -30,6 +30,11 @@ public class LocalRegistry {
             }
 
             @Override
+            public boolean boardPlayMove(int from, int to) {
+                return currentMap.update(Move.of(from, to)).validate();
+            }
+
+            @Override
             public boolean boardPlayMove(int sourceX, int sourceY, int targetX, int targetY) {
                 return currentMap.update(Move.of(sourceX + 8 * sourceY, targetX + 8 * targetY)).validate();
             }

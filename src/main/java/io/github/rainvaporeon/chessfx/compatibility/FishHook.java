@@ -14,6 +14,8 @@ public interface FishHook {
     // Plays this notation in the current board
     boolean boardPlayMove(String notation);
 
+    boolean boardPlayMove(int from, int to);
+
     // Plays this location in the current board
     boolean boardPlayMove(int sourceX, int sourceY, int targetX, int targetY);
 
