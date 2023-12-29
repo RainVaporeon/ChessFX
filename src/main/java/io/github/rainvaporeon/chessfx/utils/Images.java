@@ -1,11 +1,9 @@
 package io.github.rainvaporeon.chessfx.utils;
 
-import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.InputStream;
-import java.util.Objects;
 
 public class Images {
 

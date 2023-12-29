@@ -20,7 +20,8 @@ public class GridPanes {
             count++;
             for (int j = 0; j < 8; j++) {
                 Rectangle r = new Rectangle(s, s, s, s);
-                int piece = FishHook.INSTANCE.getPieceAt(j, i);
+                // per Fish specification, the top rows are back-most.
+                int piece = FishHook.INSTANCE.getPieceAt(j, 7 - i);
                 ImageView view = Images.getImageView(FishHook.INSTANCE.getCompatiblePieceName(piece));
                 if (count % 2 == 0) {
                     r.setFill(Color.DARKOLIVEGREEN);
@@ -31,7 +32,6 @@ public class GridPanes {
                 count++;
             }
         }
-
 
         CHESS_LAYOUT = pane;
     }

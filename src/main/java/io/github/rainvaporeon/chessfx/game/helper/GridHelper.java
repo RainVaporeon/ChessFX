@@ -25,4 +25,8 @@ public class GridHelper {
     public static int getGridY(int value) {
         return (8 - value) * 64;
     }
+
+    public static boolean isDarkSquare(int x, int y) {
+        return (x + y) % 2 == 0; // Only if the x + y is divisible by two
+    }
 }

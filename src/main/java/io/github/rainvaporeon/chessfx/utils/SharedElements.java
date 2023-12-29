@@ -6,6 +6,9 @@ import javafx.stage.Stage;
 public class SharedElements {
     private static final StableField<Stage> stage = new StableField<>();
 
+    public static int selectedX;
+    public static int selectedY;
+
     public static Stage getStage() {
         return stage.get();
     }
