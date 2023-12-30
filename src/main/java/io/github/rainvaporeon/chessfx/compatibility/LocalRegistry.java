@@ -9,7 +9,7 @@ import com.spiritlight.fishutils.collections.IntList;
 
 import java.util.Locale;
 
-import static com.spiritlight.chess.fish.game.Piece.WHITE;
+import static com.spiritlight.chess.fish.game.Piece.*;
 
 public class LocalRegistry {
     private static BoardMap currentMap;
@@ -22,6 +22,7 @@ public class LocalRegistry {
         return new FishHook() {
             @Override
             public String getCompatiblePieceName(int piece) {
+                if((piece & ~(PIECE_MASK | COLOR_MASK)) != 0) return "blank";
                 return Piece.asString(piece).toLowerCase(Locale.ROOT).replace(' ', '-');
             }
 
@@ -58,6 +59,33 @@ public class LocalRegistry {
             @Override
             public int getPieceAt(int location) {
                 return currentMap.getPieceAt(location);
+            }
+
+            @Override
+            public int getKingPosition(int side) {
+                BoardMap.BoardItr itr = side == WHITE ? currentMap.itr() : currentMap.getEnemyBoard().itr();
+                long layout;
+                while(itr.cursorPiece() != KING) {
+                    itr.nextLong();
+                }
+                layout = itr.nextLong();
+                return Long.numberOfTrailingZeros(layout);
+            }
+
+            @Override
+            public int getCheckedSquare() {
+                if(currentMap.inCheck()) {
+                    return getKingPosition(WHITE);
+                }
+                if(currentMap.getEnemyBoard().inCheck()) {
+                    return getKingPosition(BLACK);
+                }
+                return -1;
+            }
+
+            @Override
+            public boolean anySideInCheck() {
+                return currentMap.inCheck() || currentMap.getEnemyBoard().inCheck();
             }
 
             @Override
