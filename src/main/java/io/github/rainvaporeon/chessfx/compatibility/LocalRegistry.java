@@ -64,12 +64,12 @@ public class LocalRegistry {
             @Override
             public int getKingPosition(int side) {
                 BoardMap.BoardItr itr = side == WHITE ? currentMap.itr() : currentMap.getEnemyBoard().itr();
-                long layout;
+                long layout = 0;
                 while(itr.cursorPiece() != KING) {
-                    itr.nextLong();
+                    layout = itr.nextLong();
                 }
-                layout = itr.nextLong();
-                return Long.numberOfTrailingZeros(layout);
+                int ret = Long.numberOfTrailingZeros(layout);
+                return ret == 64 ? -1 : ret;
             }
 
             @Override
