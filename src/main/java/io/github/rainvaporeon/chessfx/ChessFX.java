@@ -1,5 +1,6 @@
 package io.github.rainvaporeon.chessfx;
 
+import com.spiritlight.chess.fish.internal.InternLogger;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
 import io.github.rainvaporeon.chessfx.events.BaseEventRegistrar;
@@ -9,6 +10,7 @@ import io.github.rainvaporeon.chessfx.utils.Board;
 import io.github.rainvaporeon.chessfx.utils.GridPanes;
 import io.github.rainvaporeon.chessfx.utils.SharedElements;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -20,6 +22,8 @@ public class ChessFX extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        hookShutdownOp(stage);
+
         SharedElements.setStage(stage);
         init0();
 
@@ -88,7 +92,15 @@ public class ChessFX extends Application {
         return menubar;
     }
 
+    private static void hookShutdownOp(Stage stage) {
+        stage.setOnCloseRequest(_ -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
+
     public static void main(String[] args) {
+        InternLogger.setEnabled(true);
         launch();
     }
 }

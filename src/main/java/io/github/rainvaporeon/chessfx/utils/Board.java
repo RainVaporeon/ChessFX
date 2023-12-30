@@ -1,7 +1,9 @@
 package io.github.rainvaporeon.chessfx.utils;
 
+import com.spiritlight.chess.fish.game.utils.MoveGenerator;
 import io.github.rainvaporeon.chessfx.async.AsyncTaskThread;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
+import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
@@ -20,14 +22,21 @@ public class Board {
         }
         pane.getChildren().add(GridPanes.getPieceOverlay());
 
+        if(LocalRegistry.getCurrentMap().inCheck()) {
+            ChessFXLogger.getLogger().debug("Check detected: Available moves are as follows:");
+            ChessFXLogger.getLogger().debug(MoveGenerator.create(LocalRegistry.getCurrentMap()).getAllValidMoves().toString());
+        }
+
         AsyncTaskThread.submitTask(() -> {
             int result = FishHook.INSTANCE.getBoardState();
             switch (result) {
                 case FishHook.CHECKMATE -> {
+                    ChessFXLogger.getLogger().debug("Checkmate detected");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Game ended by checkmate");
                     Platform.runLater(alert::showAndWait);
                 }
                 case FishHook.STALEMATE -> {
+                    ChessFXLogger.getLogger().debug("Stalemate detected");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Game drawn by stalemate");
                     Platform.runLater(alert::showAndWait);
                 }
