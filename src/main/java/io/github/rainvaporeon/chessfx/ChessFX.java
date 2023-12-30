@@ -1,6 +1,7 @@
 package io.github.rainvaporeon.chessfx;
 
 import com.spiritlight.chess.fish.internal.InternLogger;
+import io.github.rainvaporeon.chessfx.async.AsyncTaskThread;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
 import io.github.rainvaporeon.chessfx.events.BaseEventRegistrar;
@@ -23,6 +24,8 @@ public class ChessFX extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         hookShutdownOp(stage);
+        AsyncTaskThread.init();
+        AsyncTaskThread.submitTask(() -> System.out.println("Async task thread polled"));
 
         SharedElements.setStage(stage);
         init0();

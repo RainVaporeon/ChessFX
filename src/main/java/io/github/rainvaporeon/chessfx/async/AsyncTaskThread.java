@@ -23,6 +23,8 @@ public class AsyncTaskThread extends Thread {
         this.pollRate = pollRate;
     }
 
+    public static void init() {}
+
     public static void submitTask(AsyncRequest request) {
         MAIN.requestQueue.add(request);
     }
