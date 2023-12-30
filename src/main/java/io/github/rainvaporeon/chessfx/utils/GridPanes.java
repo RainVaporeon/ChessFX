@@ -1,8 +1,10 @@
 package io.github.rainvaporeon.chessfx.utils;
 
 import com.spiritlight.chess.fish.game.Piece;
+import com.spiritlight.chess.fish.game.utils.board.BoardHelper;
 import com.spiritlight.fishutils.logging.Loggers;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
+import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
 import io.github.rainvaporeon.chessfx.game.helper.GridHelper;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -61,6 +63,14 @@ public class GridPanes {
         GridPane pane = new GridPane();
         int[] possibleMoves = FishHook.INSTANCE.getPossibleMoves(SharedElements.selectedX + 8 * SharedElements.selectedY);
 
+        int checkedSquare = FishHook.INSTANCE.getCheckedSquare();
+        if(checkedSquare != -1) {
+            Rectangle rect = new Rectangle(64, 64, 64, 64);
+            rect.setFill(GridHelper.isDarkSquare(BoardHelper.getFile(checkedSquare), 7 - BoardHelper.getRank(checkedSquare)) ? Color.ORANGERED : Color.LIGHTCORAL);
+            pane.add(rect, BoardHelper.getFile(checkedSquare), 7 - BoardHelper.getRank(checkedSquare));
+            ChessFXLogger.getLogger().debug(STR."Placed check sign at \{BoardHelper.getFile(checkedSquare)}, \{BoardHelper.getRank(checkedSquare)}");
+        }
+
         if(!Piece.is(piece, NONE)) {
             Rectangle rect = new Rectangle(64, 64, 64, 64);
             rect.setFill(GridHelper.isDarkSquare(SharedElements.selectedX, 7 - SharedElements.selectedY) ? Color.DARKKHAKI : Color.BURLYWOOD);
@@ -77,7 +87,7 @@ public class GridPanes {
                 int index = i + (7 - j) * 8;
                 for(int value : possibleMoves) {
                     if(index == value) {
-                        if(Piece.is(FishHook.INSTANCE.getPieceAt(index), NONE)) {
+                        if(Piece.is(FishHook.INSTANCE.getPieceAt(index), NONE) && index != LocalRegistry.getCurrentMap().enPassantSquare()) {
                             pane.add(Images.getImageView("dot"), i, j);
                         } else {
                             pane.add(Images.getImageView("capture"), i, j);
