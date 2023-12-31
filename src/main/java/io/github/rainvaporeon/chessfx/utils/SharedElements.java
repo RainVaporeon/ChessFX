@@ -9,6 +9,10 @@ public class SharedElements {
     public static int selectedX = -1;
     public static int selectedY = -1;
 
+    public static int getSelectedIndex(boolean invertY) {
+        return selectedX + 8 * (invertY ? 7 - selectedY : selectedY);
+    }
+
     public static Stage getStage() {
         return stage.get();
     }

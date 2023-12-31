@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.Arrays;
 
 import static com.spiritlight.chess.fish.game.Piece.NONE;
+import static com.spiritlight.chess.fish.game.Piece.PAWN;
 
 public class GridPanes {
 
@@ -87,7 +88,9 @@ public class GridPanes {
                 int index = i + (7 - j) * 8;
                 for(int value : possibleMoves) {
                     if(index == value) {
-                        if(Piece.is(FishHook.INSTANCE.getPieceAt(index), NONE) && index != LocalRegistry.getCurrentMap().enPassantSquare()) {
+                        boolean selectedEnPassant = index == LocalRegistry.getCurrentMap().enPassantSquare();
+                        boolean selectedPawn = Piece.is(FishHook.INSTANCE.getPieceAt(SharedElements.getSelectedIndex(false)), PAWN);
+                        if(Piece.is(FishHook.INSTANCE.getPieceAt(index), NONE) && !(selectedEnPassant && selectedPawn)) {
                             pane.add(Images.getImageView("dot"), i, j);
                         } else {
                             pane.add(Images.getImageView("capture"), i, j);
