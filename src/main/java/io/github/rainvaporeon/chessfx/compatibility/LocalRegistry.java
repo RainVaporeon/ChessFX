@@ -7,15 +7,28 @@ import com.spiritlight.chess.fish.game.utils.board.BoardMap;
 import com.spiritlight.chess.fish.game.utils.game.Move;
 import com.spiritlight.fishutils.collections.IntList;
 
+import java.util.ArrayDeque;
 import java.util.Locale;
+import java.util.Queue;
+import java.util.Stack;
 
 import static com.spiritlight.chess.fish.game.Piece.*;
 
 public class LocalRegistry {
     private static BoardMap currentMap;
+    private static final Stack<Move> undoStack = new Stack<>();
+    private static final Queue<Move> redoQueue = new ArrayDeque<>();
 
     public static BoardMap getCurrentMap() {
         return currentMap;
+    }
+
+    public static Stack<Move> getUndoStack() {
+        return undoStack;
+    }
+
+    public static Queue<Move> getRedoQueue() {
+        return redoQueue;
     }
 
     static FishHook registerFish() {
@@ -28,26 +41,46 @@ public class LocalRegistry {
 
             @Override
             public boolean boardPlayMove(String notation) {
-                return currentMap.update(Move.of(notation)).validate();
+                Move move = Move.of(notation);
+                boolean success = currentMap.update(move).validate();
+                if(success) {
+                    undoStack.push(move);
+                    return true;
+                }
+                return false;
             }
 
             @Override
             public boolean boardPlayMove(int from, int to) {
-                return currentMap.update(Move.of(from, to)).validate();
+                Move move = Move.of(from, to);
+                boolean success = currentMap.update(move).validate();
+                if(success) {
+                    undoStack.push(move);
+                    return true;
+                }
+                return false;
             }
 
             @Override
             public boolean boardPlayMove(int sourceX, int sourceY, int targetX, int targetY) {
-                return currentMap.update(Move.of(sourceX + 8 * sourceY, targetX + 8 * targetY)).validate();
+                Move move = Move.of(sourceX + 8 * sourceY, targetX + 8 * targetY);
+                boolean success = currentMap.update(move).validate();
+                if(success) {
+                    undoStack.push(move);
+                    return true;
+                }
+                return false;
             }
 
             @Override
             public void boardLoadFEN(String fen) {
+                resetBoard();
                 currentMap = BoardMap.fromFENString(fen);
             }
 
             @Override
             public void boardInitialize() {
+                resetBoard();
                 currentMap = BoardMap.initialize();
             }
 
@@ -110,6 +143,19 @@ public class LocalRegistry {
             }
 
             @Override
+            public boolean supportsMoveUnmaking() {
+                return true;
+            }
+
+            @Override
+            public void unmakeMove() {
+                if(undoStack.isEmpty()) return;
+                Move move = undoStack.pop();
+                currentMap.unmake(move);
+                redoQueue.offer(move);
+            }
+
+            @Override
             public String getPieceName(int piece) {
                 return Piece.asString(piece);
             }
@@ -130,6 +176,10 @@ public class LocalRegistry {
                     }
                     return list.toIntArray();
                 }
+            }
+
+            private void resetBoard() {
+                undoStack.clear();
             }
         };
     }

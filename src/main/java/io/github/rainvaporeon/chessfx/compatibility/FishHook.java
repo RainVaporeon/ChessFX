@@ -125,6 +125,18 @@ public interface FishHook {
      */
     boolean validateFENString(String fen);
 
+    /**
+     * Checks whether {@link FishHook#unmakeMove()} is supported
+     * @return {@code true} if {@link FishHook#unmakeMove()} throws
+     * an exception.
+     */
+    boolean supportsMoveUnmaking();
+
+    /**
+     * Unmakes the latest valid move on the board
+     */
+    void unmakeMove();
+
     // All possible outcomes
     int PROGRESS  = 0;
     int CHECKMATE = 1;
