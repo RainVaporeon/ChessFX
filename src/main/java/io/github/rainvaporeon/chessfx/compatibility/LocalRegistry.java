@@ -6,28 +6,26 @@ import com.spiritlight.chess.fish.game.utils.MoveGenerator;
 import com.spiritlight.chess.fish.game.utils.board.BoardMap;
 import com.spiritlight.chess.fish.game.utils.game.Move;
 import com.spiritlight.fishutils.collections.IntList;
+import io.github.rainvaporeon.chessfx.utils.ChessFXLogger;
 
-import java.util.ArrayDeque;
-import java.util.Locale;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 import static com.spiritlight.chess.fish.game.Piece.*;
 
 public class LocalRegistry {
     private static BoardMap currentMap;
-    private static final Stack<Move> undoStack = new Stack<>();
-    private static final Queue<Move> redoQueue = new ArrayDeque<>();
+    private static final Stack<BoardMap> undoStack = new Stack<>();
+    private static final Queue<BoardMap> redoQueue = new LinkedList<>();
 
     public static BoardMap getCurrentMap() {
         return currentMap;
     }
 
-    public static Stack<Move> getUndoStack() {
+    public static Stack<BoardMap> getUndoStack() {
         return undoStack;
     }
 
-    public static Queue<Move> getRedoQueue() {
+    public static Queue<BoardMap> getRedoQueue() {
         return redoQueue;
     }
 
@@ -42,34 +40,32 @@ public class LocalRegistry {
             @Override
             public boolean boardPlayMove(String notation) {
                 Move move = Move.of(notation);
+                //undoStack.push(currentMap.fork());
                 boolean success = currentMap.update(move).validate();
                 if(success) {
-                    undoStack.push(move);
                     return true;
                 }
+                //undoStack.pop();
                 return false;
             }
 
             @Override
             public boolean boardPlayMove(int from, int to) {
                 Move move = Move.of(from, to);
+                //undoStack.push(currentMap.fork());
                 boolean success = currentMap.update(move).validate();
                 if(success) {
-                    undoStack.push(move);
                     return true;
                 }
+                //undoStack.pop();
                 return false;
             }
 
             @Override
             public boolean boardPlayMove(int sourceX, int sourceY, int targetX, int targetY) {
-                Move move = Move.of(sourceX + 8 * sourceY, targetX + 8 * targetY);
-                boolean success = currentMap.update(move).validate();
-                if(success) {
-                    undoStack.push(move);
-                    return true;
-                }
-                return false;
+                int src = sourceX + 8 * sourceY;
+                int dest = targetX + 8 * targetY;
+                return boardPlayMove(src, dest);
             }
 
             @Override
@@ -144,15 +140,18 @@ public class LocalRegistry {
 
             @Override
             public boolean supportsMoveUnmaking() {
-                return true;
+                return false;
             }
 
             @Override
             public void unmakeMove() {
-                if(undoStack.isEmpty()) return;
-                Move move = undoStack.pop();
-                currentMap.unmake(move);
-                redoQueue.offer(move);
+                if(!supportsMoveUnmaking()) throw new UnsupportedOperationException();
+                if(undoStack.isEmpty()) {
+                    ChessFXLogger.getLogger().debug("No more moves to undo");
+                    return;
+                }
+                redoQueue.offer(currentMap.fork());
+                currentMap = undoStack.pop();
             }
 
             @Override

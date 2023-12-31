@@ -1,5 +1,6 @@
 package io.github.rainvaporeon.chessfx.utils;
 
+import com.spiritlight.chess.fish.game.utils.board.BoardMap;
 import com.spiritlight.chess.fish.game.utils.game.Move;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
@@ -18,9 +19,9 @@ public record KeyInputOp(KeyCode key, Runnable runnable) {
     });
     public static final KeyInputOp REDO_BOARD = create(RIGHT, () -> {
         if(FishHook.INSTANCE.supportsMoveUnmaking()) {
-            Move move = LocalRegistry.getRedoQueue().poll();
-            if(move == null) return;
-            FishHook.INSTANCE.boardPlayMove(move.from(), move.to());
+            BoardMap map = LocalRegistry.getRedoQueue().poll();
+            if(map == null) return;
+            FishHook.INSTANCE.boardLoadFEN(map.toFENString());
         }
     });
 
