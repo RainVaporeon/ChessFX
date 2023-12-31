@@ -19,7 +19,9 @@ public class AsyncTaskThread extends Thread {
 
     private final Queue<AsyncRequest> requestQueue = new ArrayBlockingQueue<>(10);
 
-    public AsyncTaskThread(long pollRate) {
+    private static int threadId = 1;
+    private AsyncTaskThread(long pollRate) {
+        this.setName(STR."ChessFX/Async Task Thread #\{threadId++}");
         this.pollRate = pollRate;
     }
 
