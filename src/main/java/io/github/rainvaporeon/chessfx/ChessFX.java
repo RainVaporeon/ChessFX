@@ -9,9 +9,11 @@ import io.github.rainvaporeon.chessfx.handlers.ClickHandler;
 import io.github.rainvaporeon.chessfx.handlers.EventHandler;
 import io.github.rainvaporeon.chessfx.utils.Board;
 import io.github.rainvaporeon.chessfx.utils.GridPanes;
+import io.github.rainvaporeon.chessfx.utils.KeyInputOp;
 import io.github.rainvaporeon.chessfx.utils.SharedElements;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventTarget;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -38,6 +40,8 @@ public class ChessFX extends Application {
         stage.setTitle("ChessFX");
         stage.setScene(scene);
         stage.setResizable(false);
+
+        addKeyInputOp(scene);
 
         Board.update();
 
@@ -93,6 +97,10 @@ public class ChessFX extends Application {
         menubar.setUseSystemMenuBar(true);
 
         return menubar;
+    }
+
+    private static void addKeyInputOp(Scene target) {
+        KeyInputOp.hook(target, KeyInputOp.RESET_BOARD, KeyInputOp.UNDO_BOARD, KeyInputOp.REDO_BOARD);
     }
 
     private static void hookShutdownOp(Stage stage) {
