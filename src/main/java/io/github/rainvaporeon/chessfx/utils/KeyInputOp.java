@@ -1,14 +1,10 @@
 package io.github.rainvaporeon.chessfx.utils;
 
-import com.spiritlight.chess.fish.game.utils.board.BoardMap;
-import com.spiritlight.chess.fish.game.utils.game.Move;
+import io.github.rainvaporeon.chess.fish.game.utils.board.BoardMap;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
-import javafx.event.EventTarget;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 
 import static javafx.scene.input.KeyCode.*;
 

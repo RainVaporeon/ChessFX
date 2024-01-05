@@ -86,7 +86,7 @@ public interface FishHook {
      * Gets the piece on this coordinate
      * @param x the x coordinate
      * @param y the y coordinate
-     * @return the piece, or {@link com.spiritlight.chess.fish.game.Piece#NONE} if none
+     * @return the piece, or {@link io.github.rainvaporeon.chess.fish.game.Piece#NONE} if none
      */
     // Gets a piece at location with the board
     int getPieceAt(int x, int y);
@@ -94,7 +94,7 @@ public interface FishHook {
     /**
      * Gets the piece on this location
      * @param location the location
-     * @return the piece, or {@link com.spiritlight.chess.fish.game.Piece#NONE} if none
+     * @return the piece, or {@link io.github.rainvaporeon.chess.fish.game.Piece#NONE} if none
      */
     int getPieceAt(int location);
 

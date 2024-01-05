@@ -1,16 +1,16 @@
 package io.github.rainvaporeon.chessfx.compatibility;
 
-import com.spiritlight.chess.fish.game.FEN;
-import com.spiritlight.chess.fish.game.Piece;
-import com.spiritlight.chess.fish.game.utils.MoveGenerator;
-import com.spiritlight.chess.fish.game.utils.board.BoardMap;
-import com.spiritlight.chess.fish.game.utils.game.Move;
+import io.github.rainvaporeon.chess.fish.game.FEN;
+import io.github.rainvaporeon.chess.fish.game.Piece;
+import io.github.rainvaporeon.chess.fish.game.utils.MoveGenerator;
+import io.github.rainvaporeon.chess.fish.game.utils.board.BoardMap;
+import io.github.rainvaporeon.chess.fish.game.utils.game.Move;
 import com.spiritlight.fishutils.collections.IntList;
 import io.github.rainvaporeon.chessfx.utils.ChessFXLogger;
 
 import java.util.*;
 
-import static com.spiritlight.chess.fish.game.Piece.*;
+import static io.github.rainvaporeon.chess.fish.game.Piece.*;
 
 public class LocalRegistry {
     private static BoardMap currentMap;

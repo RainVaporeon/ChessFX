@@ -1,6 +1,6 @@
 package io.github.rainvaporeon.chessfx.utils;
 
-import com.spiritlight.chess.fish.game.utils.MoveGenerator;
+import io.github.rainvaporeon.chess.fish.game.utils.MoveGenerator;
 import io.github.rainvaporeon.chessfx.async.AsyncTaskThread;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;

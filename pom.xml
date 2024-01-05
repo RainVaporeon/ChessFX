@@ -23,7 +23,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.spiritlight.chess.fish</groupId>
+            <groupId>io.github.rainvaporeon.chess.fish</groupId>
             <artifactId>Fish</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>system</scope>

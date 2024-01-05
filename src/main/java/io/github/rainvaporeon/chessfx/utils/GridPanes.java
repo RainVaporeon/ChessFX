@@ -1,7 +1,7 @@
 package io.github.rainvaporeon.chessfx.utils;
 
-import com.spiritlight.chess.fish.game.Piece;
-import com.spiritlight.chess.fish.game.utils.board.BoardHelper;
+import io.github.rainvaporeon.chess.fish.game.Piece;
+import io.github.rainvaporeon.chess.fish.game.utils.board.BoardHelper;
 import com.spiritlight.fishutils.logging.Loggers;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
@@ -13,8 +13,8 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Arrays;
 
-import static com.spiritlight.chess.fish.game.Piece.NONE;
-import static com.spiritlight.chess.fish.game.Piece.PAWN;
+import static io.github.rainvaporeon.chess.fish.game.Piece.NONE;
+import static io.github.rainvaporeon.chess.fish.game.Piece.PAWN;
 
 public class GridPanes {
 

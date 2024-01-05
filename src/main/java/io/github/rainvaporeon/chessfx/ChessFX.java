@@ -1,16 +1,14 @@
 package io.github.rainvaporeon.chessfx;
 
-import com.spiritlight.chess.fish.internal.InternLogger;
+import io.github.rainvaporeon.chess.fish.internal.InternLogger;
+import com.spiritlight.fishutils.utils.noop.io.NoOpPrintStream;
 import io.github.rainvaporeon.chessfx.async.AsyncTaskThread;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.compatibility.LocalRegistry;
 import io.github.rainvaporeon.chessfx.events.BaseEventRegistrar;
 import io.github.rainvaporeon.chessfx.handlers.ClickHandler;
 import io.github.rainvaporeon.chessfx.handlers.EventHandler;
-import io.github.rainvaporeon.chessfx.utils.Board;
-import io.github.rainvaporeon.chessfx.utils.GridPanes;
-import io.github.rainvaporeon.chessfx.utils.KeyInputOp;
-import io.github.rainvaporeon.chessfx.utils.SharedElements;
+import io.github.rainvaporeon.chessfx.utils.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventTarget;
@@ -19,7 +17,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class ChessFX extends Application {
 
@@ -111,7 +111,7 @@ public class ChessFX extends Application {
     }
 
     public static void main(String[] args) {
-        InternLogger.setEnabled(true);
+        InternLogger.setEnabled(false);
         launch();
     }
 }
