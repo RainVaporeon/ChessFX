@@ -41,6 +41,11 @@ public class Board {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Game drawn by stalemate");
                     Platform.runLater(alert::showAndWait);
                 }
+                case FishHook.MOVE_50 -> {
+                    ChessFXLogger.getLogger().debug("50-Move rule triggered");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Game drawn by 50-move rule");
+                    Platform.runLater(alert::showAndWait);
+                }
             }
         });
     }
