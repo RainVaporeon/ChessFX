@@ -17,7 +17,7 @@ public class AsyncTaskThread extends Thread {
      */
     private final long pollRate;
 
-    private final Queue<AsyncRequest> requestQueue = new ArrayBlockingQueue<>(10);
+    private final Queue<AsyncRequest> requestQueue = new ArrayBlockingQueue<>(16);
 
     private static int threadId = 1;
     private AsyncTaskThread(long pollRate) {
@@ -28,7 +28,7 @@ public class AsyncTaskThread extends Thread {
     public static void init() {}
 
     public static void submitTask(AsyncRequest request) {
-        MAIN.requestQueue.add(request);
+        MAIN.requestQueue.offer(request);
     }
 
     public void supply(AsyncRequest request) {
