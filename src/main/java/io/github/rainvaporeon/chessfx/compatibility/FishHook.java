@@ -1,6 +1,7 @@
 package io.github.rainvaporeon.chessfx.compatibility;
 
 import java.lang.reflect.Field;
+import java.util.function.Consumer;
 
 /**
  * Interface for interacting with the Fish implementation
@@ -148,5 +149,9 @@ public interface FishHook {
      * @return the board state, see {@link FishHook} for possible outcomes.
      */
     int getBoardState();
+
+    boolean supportsConsoleCommand();
+
+    void appendConsoleCommand(String key, String description, Consumer<String> consumer);
 
 }
