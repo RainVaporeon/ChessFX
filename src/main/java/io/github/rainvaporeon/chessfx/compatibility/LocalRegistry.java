@@ -6,9 +6,12 @@ import io.github.rainvaporeon.chess.fish.game.utils.MoveGenerator;
 import io.github.rainvaporeon.chess.fish.game.utils.board.BoardMap;
 import io.github.rainvaporeon.chess.fish.game.utils.game.Move;
 import com.spiritlight.fishutils.collections.IntList;
+import io.github.rainvaporeon.chess.fish.internal.command.CommandDetail;
+import io.github.rainvaporeon.chess.fish.internal.command.ConsoleCommand;
 import io.github.rainvaporeon.chessfx.utils.ChessFXLogger;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 import static io.github.rainvaporeon.chess.fish.game.Piece.*;
 
@@ -179,6 +182,16 @@ public class LocalRegistry {
 
             private void resetBoard() {
                 undoStack.clear();
+            }
+
+            @Override
+            public boolean supportsConsoleCommand() {
+                return true;
+            }
+
+            @Override
+            public void appendConsoleCommand(String key, String description, Consumer<String> consumer) {
+                ConsoleCommand.registerDetail(new CommandDetail(key, consumer, description));
             }
         };
     }
