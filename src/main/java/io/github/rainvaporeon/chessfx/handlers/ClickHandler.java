@@ -1,7 +1,7 @@
 package io.github.rainvaporeon.chessfx.handlers;
 
-import io.github.rainvaporeon.chess.fish.game.Piece;
 import com.spiritlight.fishutils.utils.eventbus.events.EventBusSubscriber;
+import io.github.rainvaporeon.chess.fish.game.Piece;
 import io.github.rainvaporeon.chessfx.compatibility.FishHook;
 import io.github.rainvaporeon.chessfx.events.SelectionChangedEvent;
 import io.github.rainvaporeon.chessfx.events.bus.FXEventBus;
