@@ -4,7 +4,7 @@ A simple graphics interface to your chess implementation
 
 ## Building
 
-Compiled in Java 21, requires FishUtilities-1.2.18? or higher
+Compiled in Java 21, requires FishUtilities-1.2.16 or higher
 (see [RainVaporeon/FishUtilities](https://github.com/RainVaporeon/FishUtilities) for them)
 
 ## Development Notes
