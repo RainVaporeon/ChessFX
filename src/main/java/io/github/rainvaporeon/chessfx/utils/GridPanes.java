@@ -65,6 +65,7 @@ public class GridPanes {
         int[] possibleMoves = FishHook.INSTANCE.getPossibleMoves(SharedElements.selectedX + 8 * SharedElements.selectedY);
 
         int checkedSquare = FishHook.INSTANCE.getCheckedSquare();
+
         if(checkedSquare != -1) {
             Rectangle rect = new Rectangle(64, 64, 64, 64);
             rect.setFill(GridHelper.isDarkSquare(BoardHelper.getFile(checkedSquare), 7 - BoardHelper.getRank(checkedSquare)) ? Color.ORANGERED : Color.LIGHTCORAL);
@@ -78,7 +79,8 @@ public class GridPanes {
             pane.add(rect, SharedElements.selectedX, 7 - SharedElements.selectedY);
             ChessFXLogger.getLogger().debug(STR."Placed colored sign at \{SharedElements.selectedX}, \{SharedElements.selectedY}");
         } else {
-            return null;
+            // Exit if and only if there are no other renders
+            if(checkedSquare == -1) return null;
         }
         ChessFXLogger.getLogger().debug(STR."Found piece \{Piece.asString(piece)}@\{SharedElements.selectedX + 8 * SharedElements.selectedY}");
         ChessFXLogger.getLogger().debug(STR."Can move to \{Arrays.toString(possibleMoves)}");

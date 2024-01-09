@@ -42,6 +42,9 @@ public class ClickHandler {
         }
     }
 
+    /**
+     * Resets the selected squares
+     */
     public static void resetClicks() {
         SharedElements.selectedX = -1;
         SharedElements.selectedY = -1;

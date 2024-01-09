@@ -49,7 +49,6 @@ public interface FishHook {
      * @apiNote this is equal to calling
      * {@code boardPlayMove(sourceX + 8 * sourceY, targetX + 8 * targetY)}.
      */
-    // Plays this location in the current board
     boolean boardPlayMove(int sourceX, int sourceY, int targetX, int targetY);
 
     /**

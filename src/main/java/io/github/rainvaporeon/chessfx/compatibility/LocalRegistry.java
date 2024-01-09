@@ -8,6 +8,7 @@ import io.github.rainvaporeon.chess.fish.game.utils.game.Move;
 import com.spiritlight.fishutils.collections.IntList;
 import io.github.rainvaporeon.chess.fish.internal.command.CommandDetail;
 import io.github.rainvaporeon.chess.fish.internal.command.ConsoleCommand;
+import io.github.rainvaporeon.chessfx.handlers.ClickHandler;
 import io.github.rainvaporeon.chessfx.utils.ChessFXLogger;
 
 import java.util.*;
@@ -80,6 +81,7 @@ public class LocalRegistry {
             @Override
             public void boardInitialize() {
                 resetBoard();
+                ClickHandler.resetClicks();
                 currentMap = BoardMap.initialize();
             }
 
